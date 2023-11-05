@@ -1,5 +1,5 @@
 # TextToWebsite
-Make your ideas come to life in moments with our simple text to website tool
+Make your ideas come to life in moments with our simple text to website AI tool
 
 ## Overview 
 Third place at Surf Incubator Hackathon in Seattle for our text to website tool using GPT-4, LangChain, and Streamlit. The hackathon was organized in March 2023.
