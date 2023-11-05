@@ -9,13 +9,14 @@ Shubham Chandel, Tushar Jain, Rahul Amlekar
 
 ## Sample prompts and resulting websites
 ### LinkedIn for dogs 
-![image](https://github.com/rahulamlekar/TextToWebsite/assets/9759782/bd0bd7e4-4e2e-4e3e-a22e-849c86daf8bf)
+![image](https://github.com/rahulamlekar/TextToWebsite/assets/9759782/609e6e65-c910-4e43-b448-675e766ca526)
 
 ### Virtual whiteboard 
-![image](https://github.com/rahulamlekar/TextToWebsite/assets/9759782/0b353184-4141-42cd-82e1-63cfd61d9e32)
+![image](https://github.com/rahulamlekar/TextToWebsite/assets/9759782/6bace8b9-4b81-415e-8b7e-42f81b6b9535)
 
 ### Letter from Santa
-![image](https://github.com/rahulamlekar/TextToWebsite/assets/9759782/4a5f00df-c979-4d18-a623-641aaa913277)
+![image](https://github.com/rahulamlekar/TextToWebsite/assets/9759782/abcff7da-185e-47e8-b88f-e6c65b5ee5ac)
+
 
 
 
