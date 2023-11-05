@@ -1,0 +1,70 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Workout Tracker</title>
+    <link href="bootstrap.css" rel="stylesheet">
+    <script src="jquery.js"></script>
+    <script src="bootstrap.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center">🏋️ Workout Tracker 💪</h1>
+
+        <div class="card mt-5">
+            <div class="card-header">
+                Add Workout 📝
+            </div>
+            <div class="card-body">
+                <form id="workout-form">
+                    <div class="form-group">
+                        <label for="exercise-type">Exercise Type:</label>
+                        <input type="text" class="form-control" id="exercise-type" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="duration">Duration (minutes):</label>
+                        <input type="number" class="form-control" id="duration" min="1" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="intensity">Intensity:</label>
+                        <select class="form-control" id="intensity" required>
+                            <option>Low</option>
+                            <option>Medium</option>
+                            <option>High</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Add Workout 💾</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="card mt-5">
+            <div class="card-header">
+                Workout History 📚
+            </div>
+            <ul class="list-group list-group-flush" id="workout-list">
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            $("#workout-form").on("submit", function(e) {
+                e.preventDefault();
+                const exerciseType = $("#exercise-type").val();
+                const duration = $("#duration").val();
+                const intensity = $("#intensity").val();
+
+                $("#workout-list").append(`<li class="list-group-item">${exerciseType} - ${duration} minutes - ${intensity} intensity 😄</li>`);
+
+                // Clear input fields
+                $("#exercise-type").val("");
+                $("#duration").val("");
+                $("#intensity").val("");
+            });
+        });
+    </script>
+</body>
+</html>

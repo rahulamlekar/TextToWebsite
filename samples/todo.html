@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>My To-Do List</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-200">
+
+  <div class="max-w-lg mx-auto my-10 bg-white rounded shadow p-8">
+    <h1 class="text-3xl font-bold mb-8">My To-Do List</h1>
+
+    <form class="mb-4">
+      <label class="block font-bold mb-2" for="new_todo">New To-Do:</label>
+      <input class="border rounded py-2 px-3 mb-2 w-full" type="text" id="new_todo" name="new_todo">
+      <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="submit">Add</button>
+    </form>
+
+    <ul id="todo_list" class="list-disc pl-8 mb-8">
+    </ul>
+
+    <button id="delete_btn" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Delete All</button>
+
+  </div>
+
+  <script>
+    // Define our todo list
+    const todo_list = []
+
+    // Define our DOM elements
+    const $new_todo = $('#new_todo')
+    const $todo_list = $('#todo_list')
+    const $delete_btn = $('#delete_btn')
+
+    // Add a new todo to the list and update the DOM
+    function addTodo() {
+      const todo = $new_todo.val().trim()
+      if (todo !== '') {
+        todo_list.push(todo)
+        $new_todo.val('')
+        renderTodos()
+      }
+      return false
+    }
+
+    // Render the todo list to the DOM
+    function renderTodos() {
+      $todo_list.html(todo_list.map(todo => '<li>' + todo + '</li>').join(''))
+    }
+
+    // Delete all the todos from the list and update the DOM
+    function deleteAll() {
+      todo_list.length = 0
+      renderTodos()
+    }
+
+    // Register event handlers
+    $('form').submit(addTodo)
+    $delete_btn.click(deleteAll)
+
+  </script>
+
+</body>
+</html>

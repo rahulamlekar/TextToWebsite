@@ -1,0 +1,74 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Letter from Santa 🎅</title>
+  <link rel="stylesheet" href="bootstrap.css">
+  <script src="jquery.js"></script>
+  <script src="bootstrap.js"></script>
+</head>
+<body>
+  <div class="container mt-5">
+    <h1 class="text-center">🎄 Letter from Santa 🎅</h1>
+    <p class="text-center">Fill in the details and receive a magical letter from Santa! 💌✨</p>
+    <form id="santa-letter-form">
+      <div class="form-group">
+        <label for="childName">Child's Name 🧒</label>
+        <input type="text" class="form-control" id="childName" placeholder="Enter child's name" required>
+      </div>
+      <div class="form-group">
+        <label for="childAge">Child's Age</label>
+        <input type="number" class="form-control" id="childAge" min="1" max="12" placeholder="Enter child's age" required>
+      </div>
+      <div class="form-group">
+        <label for="hometown">Hometown 🏡</label>
+        <input type="text" class="form-control" id="hometown" placeholder="Enter hometown" required>
+      </div>
+      <div class="form-group">
+        <label for="template">Choose a letter template 📜</label>
+        <select class="form-control" id="template" required>
+          <option selected disabled>Choose...</option>
+          <option>Template 1 🦌</option>
+          <option>Template 2 🍪</option>
+          <option>Template 3 ❄️</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="parentMessage">Special message from parents (optional) 💬</label>
+        <textarea class="form-control" id="parentMessage" rows="3" placeholder="Enter a special message"></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">Submit 📬</button>
+    </form>
+    <div class="mt-3" id="result"></div>
+  </div>
+
+  <script>
+    $("#santa-letter-form").on("submit", function (event) {
+      event.preventDefault();
+
+      const childName = $("#childName").val();
+      const childAge = $("#childAge").val();
+      const hometown = $("#hometown").val();
+      const template = $("#template").val();
+      const parentMessage = $("#parentMessage").val();
+
+      const letter = `📜 ${template}:
+      Dear ${childName},
+
+      Ho Ho Ho! 🎅 I heard you've been a good ${childAge}-year-old this year! You must be excited for Christmas in ${hometown}.
+
+      ${parentMessage ? `Your parents also wanted to add: "${parentMessage}"` : ""}
+
+      Merry Christmas and keep up the good behavior!
+
+      Love,
+      Santa Claus 🎅🔔
+      `;
+
+      $("#result").html(`<pre>${letter}</pre>`);
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,135 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css" rel="stylesheet">
+    <title>Tic Tac Toe</title>
+    <style>
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body class="bg-gray-200">
+    <div class="container mx-auto mt-10">
+        <div class="text-center">
+            <h1 class="text-4xl font-bold mb-6">Tic Tac Toe</h1>
+            <div id="game-board" class="grid grid-cols-3 gap-4 w-60 mx-auto p-4">
+            </div>
+            <div class="my-6">
+                <p class="text-xl" id="game-msg">Choose your opponent:</p>
+            </div>
+            <div id="difficulty" class="flex justify-center">
+                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2" id="play-human">Player</button>
+                <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded ml-2" id="play-computer">Computer</button>
+            </div>
+            <div id="level-select" class="hidden flex justify-center">
+                <button class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded mr-1" id="easy">Easy</button>
+                <button class="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded mx-1" id="medium">Medium</button>
+                <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded ml-1" id="hard">Hard</button>
+            </div>
+            <button id="reset" class="bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded mt-4 hidden">Reset</button>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            let player, computer;
+            const winningCombinations = [
+                [0, 1, 2],
+                [3, 4, 5],
+                [6, 7, 8],
+                [0, 3, 6],
+                [1, 4, 7],
+                [2, 5, 8],
+                [0, 4, 8],
+                [2, 4, 6]
+            ];
+
+            function createBoard() {
+                for (let i = 0; i < 9; i++) {
+                    $('#game-board').append(`<div class="cell bg-white h-20 w-20 flex justify-center items-center text-5xl font-bold" data-index="${i}"></div>`);
+                }
+            }
+
+            function resetBoard() {
+                $('.cell').each(function () {
+                    $(this).text("");
+                });
+                player = "X";
+                computer = "O";
+            }
+
+            function checkWin(board, symbol) {
+                return winningCombinations.some(combination => combination.every(index => board[index] === symbol));
+            }
+
+            function getEmptyCells(board) {
+                return board.reduce((acc, curr, index) => {
+                    if (curr === "") acc.push(index);
+                    return acc;
+                }, []);
+            }
+
+            function makeMove() {
+                const currentBoard = getCurrentBoard();
+                const move = findBestMove(currentBoard, computer);
+                playMove(move, computer);
+            }
+
+            function findBestMove(board, symbol) {
+                // Fill the code here to implement difficulty levels
+            }
+
+            function playMove(index, symbol) {
+                $(`.cell[data-index="${index}"]`).text(symbol);
+                if (checkWin(getCurrentBoard(), symbol)) {
+                    setTimeout(() => {
+                        alert(symbol === player ? "You win!" : "Computer wins!");
+                        resetBoard();
+                    }, 100);
+                }
+            }
+
+            function getCurrentBoard() {
+                const board = [];
+                $('.cell').each(function () {
+                    board.push($(this).text() || "");
+                });
+                return board;
+            }
+
+            createBoard();
+            resetBoard();
+
+            $('#game-board').on('click', '.cell', function () {
+                const index = $(this).data('index');
+                if (!$(this).text()) {
+                    playMove(index, player);
+                    setTimeout(makeMove, 500);
+                }
+            });
+
+            $('#play-human').click(function () {
+                player = "X";
+                computer = "O";
+            });
+
+            $('#play-computer').click(function () {
+                $('#difficulty').addClass('hidden');
+                $('#level-select').removeClass('hidden');
+            });
+
+            $('#reset').click(resetBoard);
+
+            $('#easy, #medium, #hard').click(function () {
+                $('#level-select').addClass('hidden');
+                $('#reset').removeClass('hidden');
+            });
+        });
+    </script>
+</body>
+</html>

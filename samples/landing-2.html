@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text to Website Startup</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        * {margin: 0; padding: 0; box-sizing: border-box;}
+        body {font-family: Arial, sans-serif;}
+        .bg {background-image: url("background.png"); background-size: cover; position: absolute; width: 100%; height: 100%; opacity: 0.85;}
+        .container {display: flex; align-items: center; justify-content: center; position: absolute; width: 100%; height: 100%; z-index: 1;}
+        .form-wrapper {background-color: rgba(0, 0, 0, 0.6); padding: 30px 60px; border-radius: 5px; max-width: 500px; width: 100%;}
+        h1 {color: #FFF; text-align: center; font-size: 32px; margin-bottom: 30px;}
+        input[type="email"] {width: 100%; height: 40px; padding: 10px; margin-bottom: 20px;}
+        button[type="submit"] {background-color: #4CAF50; color: white; font-size: 16px; padding: 12px 20px; border: none; cursor: pointer; width: 100%; border-radius: 5px;}
+        button[type="submit"]:hover {background-color: #45A049;}
+    </style>
+    <script>
+        function saveEmail() {
+            const email = document.getElementById("email").value;
+            fetch("/save-email", {
+                method: "POST",
+                body: JSON.stringify({email: email}),
+                headers: {"Content-Type": "application/json"},
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert("Email saved!");
+                }
+            });
+            event.preventDefault();
+        }
+    </script>
+</head>
+<body>
+    <div class="bg"></div>
+    <div class="container">
+        <div class="form-wrapper">
+            <h1>Text to Website</h1>
+            <form id="signup-form" onsubmit="saveEmail()">
+                <input type="email" id="email" name="email" placeholder="Enter your email" required>
+                <button type="submit">Sign Up</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

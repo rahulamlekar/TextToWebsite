@@ -1,0 +1,128 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Virtual Whiteboard</title>
+    <link rel="stylesheet" href="bootstrap.css">
+    <style>
+        canvas {
+            border: 1px solid #000;
+            cursor: crosshair;
+        }
+        .emoji {
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center">Virtual Whiteboard 🎨😄</h1>
+        <div class="row">
+            <canvas id="whiteboard" width="800" height="400"></canvas>
+        </div>
+        <div class="row">
+            <div class="btn-group" role="group" aria-label="Tools">
+                <button type="button" class="btn btn-primary" onclick="changeTool('pen')">Pen 🖊</button>
+                <button type="button" class="btn btn-warning" onclick="changeTool('highlighter')">Highlighter 🖍</button>
+                <button type="button" class="btn btn-danger" onclick="changeTool('eraser')">Eraser 🧹</button>
+            </div>
+        </div>
+        <div class="row">
+            <button type="button" class="btn btn-secondary" onclick="undo()">Undo ↩️</button>
+            <button type="button" class="btn btn-secondary" onclick="redo()">Redo 🔁</button>
+            <button type="button" class="btn btn-secondary" onclick="clearBoard()">Clear 🗑️</button>
+        </div>
+        <div class="row">
+            <span class="emoji" onclick="addEmoji('😀')">😀</span>
+            <span class="emoji" onclick="addEmoji('😂')">😂</span>
+            <span class="emoji" onclick="addEmoji('😎')">😎</span>
+            <span class="emoji" onclick="addEmoji('👻')">👻</span>
+            <span class="emoji" onclick="addEmoji('🚀')">🚀</span>
+        </div>
+    </div>
+    <script src="jquery.js"></script>
+    <script src="bootstrap.js"></script>
+    <script>
+        let canvas = document.getElementById('whiteboard');
+        let ctx = canvas.getContext('2d');
+        let drawing = false;
+        let tool = 'pen';
+        let history = [];
+        let historyIndex = -1;
+        
+        canvas.addEventListener('mousedown', start);
+        canvas.addEventListener('mousemove', draw);
+        canvas.addEventListener('mouseup', stop);
+        
+        function start(e) {
+            drawing = true;
+            ctx.beginPath();
+            ctx.moveTo(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop);
+            e.preventDefault();
+        }
+        
+        function draw(e) {
+            if (!drawing) return;
+            ctx.lineTo(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop);
+            
+            switch (tool) {
+                case 'pen':
+                    ctx.lineWidth = 2;
+                    ctx.strokeStyle = '#000';
+                    break;
+                case 'highlighter':
+                    ctx.lineWidth = 10;
+                    ctx.strokeStyle = 'rgba(255, 255, 0, 0.5)';
+                    break;
+                case 'eraser':
+                    ctx.lineWidth = 10;
+                    ctx.strokeStyle = '#FFF';
+                    break;
+            }
+            
+            ctx.lineCap = 'round';
+            ctx.stroke();
+        }
+        
+        function stop(e) {
+            if (!drawing) return;
+            drawing = false;
+            history.push(ctx.getImageData(0, 0, canvas.width, canvas.height));
+            historyIndex += 1;
+        }
+        
+        function changeTool(newTool) {
+            tool = newTool;
+        }
+        
+        function undo() {
+            if (historyIndex <= 0) return;
+            historyIndex -= 1;
+            ctx.putImageData(history[historyIndex], 0, 0);
+        }
+        
+        function redo() {
+            if (historyIndex >= history.length - 1) return;
+            historyIndex += 1;
+            ctx.putImageData(history[historyIndex], 0, 0);
+        }
+        
+        function clearBoard() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            history.push(ctx.getImageData(0, 0, canvas.width, canvas.height));
+            historyIndex += 1;
+        }
+        
+        function addEmoji(emoji) {
+            let fontSize = 48;
+            ctx.font = fontSize + 'px Arial';
+            ctx.fillStyle = '#000';
+            ctx.fillText(emoji, Math.random() * (canvas.width - fontSize), Math.random() * (canvas.height - fontSize));
+            history.push(ctx.getImageData(0, 0, canvas.width, canvas.height));
+            historyIndex += 1;
+        }
+    </script>
+</body>
+</html>
